@@ -18,19 +18,24 @@ It produces per-period and cumulative observables, scenario comparisons, and dec
 
 ## 1) Purpose & Scope
 
-**Purpose.** Provide an auditable, configurable and composable simulation that links transaction activity, fee generation (in BTC), and stBTC value accrual.
-**Scope.** Cover the modeling of (a) transaction growth, (b) gas consumption and pricing, (c) DeFi primitives and strategy “flywheels”, (d) policy multipliers that bias the mix toward sustainable actions, and (e) stBTC accounting (non-rebasing, price-per-share).
+1. **Purpose.** Provide an auditable, configurable and composable simulation that links transaction activity, fee generation (in BTC), and stBTC value accrual.
+
+2. **Scope.** Cover the modeling of (a) transaction growth, (b) gas consumption and pricing, (c) DeFi primitives and strategy “flywheels”, (d) policy multipliers that bias the mix toward sustainable actions onchain, and (e) stBTC accounting growth (non-rebasing, price-per-share).
 
 ---
 
 ## 2) Goals
+
+The design of the simulation model and mathematical framework has two primary goals:
 
 1. **Growth.** Increase total transactions and gas consumption such that BTC fees grow, lifting value accruing to stBTC holders.
 2. **Optimization.** Bias activity toward **repeatable**, **compute-intensive**, and **composable** DeFi actions (closed-loop strategies) via multipliers and primitive criticality, improving durability of utilization.
 
 ---
 
-## 3) Modeling Assumptions (concise)
+## 3) Modeling Assumptions
+
+Key assumptions baked into the simulation framework:
 
 * **Chain & fees.** EVM-compatible; fees are paid in BTC.
 * **Transaction types.** `native_transfer`, `erc_transfer`, `contract_creation`, `contract_call`.
@@ -45,11 +50,11 @@ It produces per-period and cumulative observables, scenario comparisons, and dec
 
 1. **Input configs** define: transaction growth, primitive gas bands, multipliers, criticality, scenario groups (sets of strategy paths), fee pricing, and stBTC rules.
 2. **Per period** the simulator:
-   a) generates transaction counts by type;
-   b) allocates counts to (primitive, tx\_type) via strategy path mixes;
-   c) draws gas per call (global stochastic adjustment) and fee-per-gas (BTC);
-   d) computes BTC fees and the **Weighted Gas Score** (quality);
-   e) updates stBTC state and derives per-period returns/APY.
+   - a) generates transaction counts by type;
+   - b) allocates counts to (primitive, tx\_type) via strategy path mixes;
+   - c) draws gas per call (global stochastic adjustment) and fee-per-gas (BTC);
+   - d) computes BTC fees and the **Weighted Gas Score** (quality);
+   - e) updates stBTC state and derives per-period returns/APY.
 3. **Outputs** include time series and aggregates for fees, stBTC exchange rate and APY, weighted gas, and fees by primitive, plus scenario comparisons.
 
 ---
