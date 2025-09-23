@@ -1,0 +1,19 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"RunConfig",
+  "type":"object",
+  "properties":{
+    "run":{
+      "type":"object",
+      "properties":{
+        "horizon_periods":{"type":"integer","minimum":1},
+        "period_label":{"type":"string"},
+        "scenario_groups":{"type":"array","items":{"type":"integer"}},
+        "preset_name":{"type":"string"},
+        "output_root":{"type":"string"},
+        "timestamp_utc":{"type":"boolean"}
+      },
+      "required":["horizon_periods","scenario_groups","preset_name","output_root"]
+    }
+  },"required":["run"]
+}

@@ -1,0 +1,8 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"PolicyMultipliers",
+  "type":"object",
+  "properties":{
+    "policy":{"type":"object","additionalProperties":{"type":"number"}}
+  },"required":["policy"]
+}

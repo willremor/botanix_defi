@@ -1,0 +1,6 @@
+# BTC price path (GBM/log-returns)
+start_usd: 70_000
+gbm:
+  mu: 0.00
+  sigma: 0.80
+  seed: 31

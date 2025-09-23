@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GasPolicy",
+  "type": "object",
+  "properties": {
+    "mode": {"type":"string","enum":["deterministic","stochastic"]},
+    "gas_adjustment": {
+      "type":"object",
+      "properties": {
+        "mu":{"type":"number"}, "sigma":{"type":"number"},
+        "min":{"type":"number"}, "max":{"type":"number"},
+        "truncation":{"type":"string"}, "seed":{"type":"integer"}
+      }, "required":["mu","sigma","min","max","truncation","seed"]
+    },
+    "eip1559": {
+      "type":"object",
+      "properties": {
+        "base_fee_btc_start":{"type":"number"},
+        "mu_bf":{"type":"number"}, "sigma_bf":{"type":"number"},
+        "priority_tip_btc":{"type":"number"},
+        "seed":{"type":"integer"}
+      },
+      "required":["base_fee_btc_start","mu_bf","sigma_bf","priority_tip_btc","seed"]
+    }
+  },
+  "required":["mode","gas_adjustment","eip1559"]
+}

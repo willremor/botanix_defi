@@ -1,0 +1,11 @@
+# Scenario groups: each is up to 5 strategy IDs for A/B tests
+scenarios:
+  - id: 101
+    name: "Carry+Stable Depth"
+    strategies: [1, 2, 9, 17, 11]
+  - id: 102
+    name: "LP+Perps Hedged"
+    strategies: [5, 15, 10, 16]
+  - id: 103
+    name: "High Gas + Calls"
+    strategies: [3, 4, 6, 18, 20]

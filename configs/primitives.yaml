@@ -1,0 +1,13 @@
+# Primitive catalog with default tx_type, gas bands (gas units), baseline multipliers, and criticality (0-5)
+primitives:
+  Payments:              {default_tx_type: native_transfer, gas_low: 21_000, gas_high: 21_000, multiplier: 1.00, criticality: 2}
+  Stablecoins:           {default_tx_type: contract_call,   gas_low: 90_000, gas_high: 180_000, multiplier: 1.25, criticality: 5}
+  Lending:               {default_tx_type: contract_call,   gas_low: 140_000, gas_high: 300_000, multiplier: 1.35, criticality: 5}
+  AMM:                   {default_tx_type: contract_call,   gas_low: 110_000, gas_high: 250_000, multiplier: 1.30, criticality: 4}
+  DEXAggregator:         {default_tx_type: contract_call,   gas_low: 160_000, gas_high: 400_000, multiplier: 1.45, criticality: 4}
+  Perpetuals:            {default_tx_type: contract_call,   gas_low: 160_000, gas_high: 420_000, multiplier: 1.50, criticality: 4}
+  Options:               {default_tx_type: contract_call,   gas_low: 180_000, gas_high: 500_000, multiplier: 1.40, criticality: 3}
+  InterestTokenisation:  {default_tx_type: contract_call,   gas_low: 180_000, gas_high: 450_000, multiplier: 1.55, criticality: 5}
+  LiquidStaking:         {default_tx_type: contract_call,   gas_low: 140_000, gas_high: 300_000, multiplier: 1.30, criticality: 4}
+  BridgesOracles:        {default_tx_type: contract_call,   gas_low: 200_000, gas_high: 550_000, multiplier: 1.20, criticality: 4}
+  RoutersZaps:           {default_tx_type: contract_call,   gas_low: 220_000, gas_high: 600_000, multiplier: 1.60, criticality: 5}

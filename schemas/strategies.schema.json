@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Strategies",
+  "type": "object",
+  "properties": {
+    "strategies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "steps"],
+        "properties": {
+          "id": { "type": "integer", "minimum": 1 },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 6,
+            "items": {
+              "type": "object",
+              "required": ["action", "asset", "primitive", "tx_type"],
+              "properties": {
+                "action": { "type": "string" },
+                "asset": { "type": "string" },
+                "primitive": { "type": "string" },
+                "tx_type": { "type": "string", "enum": ["native_transfer","erc_transfer","contract_creation","contract_call"] }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": ["strategies"]
+}

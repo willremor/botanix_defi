@@ -1,0 +1,17 @@
+# Default counts per period and single global growth process
+base_total_txs: 1_000_000
+
+shares:
+  native_transfer: 0.30
+  erc_transfer: 0.45
+  contract_creation: 0.02
+  contract_call: 0.23
+
+growth:
+  mode: stochastic
+  mu: 0.02         # mean % growth of counts per period
+  sigma: 0.05
+  min: -0.30
+  max:  0.50
+  truncation: truncnorm
+  seed: 21

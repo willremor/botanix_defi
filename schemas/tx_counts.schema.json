@@ -1,0 +1,18 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"TxCounts",
+  "type":"object",
+  "properties":{
+    "base_total_txs":{"type":"integer","minimum":0},
+    "shares":{"type":"object","additionalProperties":{"type":"number"}},
+    "growth":{
+      "type":"object",
+      "properties":{
+        "mode":{"type":"string"},
+        "mu":{"type":"number"},"sigma":{"type":"number"},
+        "min":{"type":"number"},"max":{"type":"number"},
+        "truncation":{"type":"string"},"seed":{"type":"integer"}
+      },"required":["mode","mu","sigma","min","max","truncation","seed"]
+    }
+  },"required":["base_total_txs","shares","growth"]
+}

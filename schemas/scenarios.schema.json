@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Scenarios",
+  "type": "object",
+  "properties": {
+    "scenarios": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id","name","strategies"],
+        "properties": {
+          "id": {"type":"integer"},
+          "name": {"type":"string"},
+          "strategies": {
+            "type":"array",
+            "items": {"type":"integer"},
+            "minItems": 1,
+            "maxItems": 5
+          }
+        }
+      }
+    }
+  },
+  "required": ["scenarios"]
+}

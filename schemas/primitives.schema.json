@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Primitives",
+  "type": "object",
+  "properties": {
+    "primitives": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["default_tx_type","gas_low","gas_high","multiplier","criticality"],
+        "properties": {
+          "default_tx_type": {"type":"string"},
+          "gas_low": {"type":"integer","minimum":21000},
+          "gas_high": {"type":"integer"},
+          "multiplier": {"type":"number","minimum":0.0},
+          "criticality": {"type":"integer","minimum":0,"maximum":5}
+        }
+      }
+    }
+  },
+  "required": ["primitives"]
+}

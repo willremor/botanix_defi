@@ -1,0 +1,8 @@
+enabled: true
+tracking_uri: "http://localhost:5000"
+experiment_name: "Botanix-DeFi-Sim"
+artifact_location: "outputs/mlruns"
+tags:
+  project: "Botanix"
+  owner: "DeFi-Research"
+  sim_version: "v0.1.0"

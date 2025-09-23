@@ -1,0 +1,23 @@
+# Non-rebasing stBTC (price-per-share). 50% of BTC fees accrue to assets.
+supply_start: 10_000_000
+exch_rate_start_btc: 1.0
+fee_share_to_stbtc: 0.50
+
+flows:
+  assets_rate:
+    mode: stochastic
+    mu: 0.00
+    sigma: 0.05
+    min: -0.50
+    max:  0.50
+    truncation: truncnorm
+    seed: 41
+
+  supply_rate:
+    mode: stochastic
+    mu: 0.00
+    sigma: 0.02
+    min: -0.30
+    max:  0.50
+    truncation: truncnorm
+    seed: 42

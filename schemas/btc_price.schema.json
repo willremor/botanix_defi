@@ -1,0 +1,10 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"BTCPrice",
+  "type":"object",
+  "properties":{
+    "start_usd":{"type":"number"},
+    "gbm":{"type":"object","properties":{"mu":{"type":"number"},"sigma":{"type":"number"},"seed":{"type":"integer"}},"required":["mu","sigma","seed"]}
+  },
+  "required":["start_usd","gbm"]
+}

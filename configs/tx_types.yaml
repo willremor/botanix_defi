@@ -1,0 +1,6 @@
+# Canonical EVM-style tx types used on Botanix (fees paid in BTC)
+tx_types:
+  native_transfer: {baseline_multiplier: 1.00}
+  erc_transfer:    {baseline_multiplier: 1.05}
+  contract_creation: {baseline_multiplier: 1.10}
+  contract_call:   {baseline_multiplier: 1.20}

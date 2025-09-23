@@ -1,0 +1,10 @@
+# Select scenario groups & horizon for this run (single-run or grid)
+run:
+  horizon_periods: 8
+  period_label: "week"  # for annualization (52 weeks)
+
+  scenario_groups: [101, 102, 103]   # choose 1 for single-run; multiple for grid
+  preset_name: "base"
+
+  output_root: "outputs"
+  timestamp_utc: true

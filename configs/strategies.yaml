@@ -1,0 +1,140 @@
+# 20 closed-loop strategy paths (each <= 6 steps), IDs are stable integers
+# Each step uses: {action, asset, primitive, tx_type}
+strategies:
+  - id: 1
+    name: "stBTC + Stablecoin + Lending"
+    description: "Post BTC, mint stable via CDP, supply to lending."
+    steps:
+      - {action: "Deposit", asset: "BTC", primitive: "Payments", tx_type: "native_transfer"}
+      - {action: "Mint", asset: "CDP_Stable", primitive: "Stablecoins", tx_type: "contract_call"}
+      - {action: "Supply", asset: "CDP_Stable", primitive: "Lending", tx_type: "contract_call"}
+
+  - id: 2
+    name: "stBTC + Stablecoin + LP Provision"
+    description: "Mint stable via CDP and provide LP in AMM."
+    steps:
+      - {action: "Deposit", asset: "BTC", primitive: "Payments", tx_type: "native_transfer"}
+      - {action: "Mint", asset: "CDP_Stable", primitive: "Stablecoins", tx_type: "contract_call"}
+      - {action: "AddLiquidity", asset: "stBTC/CDP_Stable", primitive: "AMM", tx_type: "contract_call"}
+
+  - id: 3
+    name: "Recursive stBTC Leverage"
+    description: "Borrow stable, buy stBTC, loop."
+    steps:
+      - {action: "Supply", asset: "stBTC", primitive: "Lending", tx_type: "contract_call"}
+      - {action: "Borrow", asset: "CDP_Stable", primitive: "Lending", tx_type: "contract_call"}
+      - {action: "Swap", asset: "CDP_Stable→stBTC", primitive: "AMM", tx_type: "contract_call"}
+
+  - id: 4
+    name: "stBTC Carry + Hedge"
+    description: "Borrow stable, buy stBTC, hedge on perps."
+    steps:
+      - {action: "Supply", asset: "stBTC", primitive: "Lending", tx_type: "contract_call"}
+      - {action: "Borrow", asset: "CDP_Stable", primitive: "Lending", tx_type: "contract_call"}
+      - {action: "Long", asset: "stBTC", primitive: "Perpetuals", tx_type: "contract_call"}
+
+  - id: 5
+    name: "LP + Perps Delta Hedge"
+    description: "Provide LP then hedge exposure via perps."
+    steps:
+      - {action: "AddLiquidity", asset: "stBTC/CDP_Stable", primitive: "AMM", tx_type: "contract_call"}
+      - {action: "Short", asset: "stBTC", primitive: "Perpetuals", tx_type: "contract_call"}
+
+  - id: 6
+    name: "Interest Tokenisation (PT/YT) + Lever"
+    description: "Tokenise yield then lever YT."
+    steps:
+      - {action: "Deposit", asset: "stBTC", primitive: "InterestTokenisation", tx_type: "contract_call"}
+      - {action: "Leverage", asset: "YT", primitive: "InterestTokenisation", tx_type: "contract_call"}
+
+  - id: 7
+    name: "Stablecoin Arbitrage via Aggregator"
+    description: "Route best price through DEX aggregator."
+    steps:
+      - {action: "RouteSwap", asset: "CDP_Stable↔USDC", primitive: "DEXAggregator", tx_type: "contract_call"}
+
+  - id: 8
+    name: "Options Covered Call (stBTC)"
+    description: "Write covered calls on stBTC."
+    steps:
+      - {action: "Deposit", asset: "stBTC", primitive: "Options", tx_type: "contract_call"}
+      - {action: "SellCall", asset: "stBTC", primitive: "Options", tx_type: "contract_call"}
+
+  - id: 9
+    name: "Stablecoin PSM Rebalance"
+    description: "Peg-stability swaps."
+    steps:
+      - {action: "PSMSwap", asset: "USDC↔CDP_Stable", primitive: "Stablecoins", tx_type: "contract_call"}
+
+  - id: 10
+    name: "Router Zap: stBTC → Hedged LP"
+    description: "One-click zap across lending, AMM, perps."
+    steps:
+      - {action: "Zap", asset: "stBTC→LP+Hedge", primitive: "RoutersZaps", tx_type: "contract_call"}
+
+  - id: 11
+    name: "AMM Range Order Mgmt"
+    description: "Manage CL ranges on AMM."
+    steps:
+      - {action: "AddLiquidity", asset: "CDP_Stable/USDC", primitive: "AMM", tx_type: "contract_call"}
+      - {action: "Rebalance", asset: "LP", primitive: "AMM", tx_type: "contract_call"}
+
+  - id: 12
+    name: "Collateral Swap"
+    description: "Swap collateral via aggregator for safety."
+    steps:
+      - {action: "RouteSwap", asset: "Alt→CDP_Stable", primitive: "DEXAggregator", tx_type: "contract_call"}
+      - {action: "Supply", asset: "CDP_Stable", primitive: "Lending", tx_type: "contract_call"}
+
+  - id: 13
+    name: "Bridge Stable In + Supply"
+    description: "Bridge in fiat stable, then lend."
+    steps:
+      - {action: "BridgeIn", asset: "USDC", primitive: "BridgesOracles", tx_type: "contract_call"}
+      - {action: "Supply", asset: "USDC", primitive: "Lending", tx_type: "contract_call"}
+
+  - id: 14
+    name: "stBTC Restake → Lending"
+    description: "Restake then use as collateral."
+    steps:
+      - {action: "Stake", asset: "stBTC", primitive: "LiquidStaking", tx_type: "contract_call"}
+      - {action: "Supply", asset: "stBTC", primitive: "Lending", tx_type: "contract_call"}
+
+  - id: 15
+    name: "Basis Trade (Stable Borrow)"
+    description: "Borrow stable, buy stBTC, perps short."
+    steps:
+      - {action: "Borrow", asset: "CDP_Stable", primitive: "Lending", tx_type: "contract_call"}
+      - {action: "Swap", asset: "CDP_Stable→stBTC", primitive: "AMM", tx_type: "contract_call"}
+      - {action: "Short", asset: "stBTC", primitive: "Perpetuals", tx_type: "contract_call"}
+
+  - id: 16
+    name: "AMM → Aggregator Routed Swap"
+    description: "Always route best price to AMM pools."
+    steps:
+      - {action: "RouteSwap", asset: "Any→Any", primitive: "DEXAggregator", tx_type: "contract_call"}
+
+  - id: 17
+    name: "CDP Stable Mint + LP Stable/Stable"
+    description: "Mint CDP stable and provide stable/ stable."
+    steps:
+      - {action: "Mint", asset: "CDP_Stable", primitive: "Stablecoins", tx_type: "contract_call"}
+      - {action: "AddLiquidity", asset: "USDC/CDP_Stable", primitive: "AMM", tx_type: "contract_call"}
+
+  - id: 18
+    name: "Liquidations Bot"
+    description: "Automated liquidation keeper flows."
+    steps:
+      - {action: "Liquidate", asset: "Any", primitive: "Lending", tx_type: "contract_call"}
+
+  - id: 19
+    name: "Options Hedge for LP"
+    description: "LP protection with puts."
+    steps:
+      - {action: "BuyPut", asset: "stBTC", primitive: "Options", tx_type: "contract_call"}
+
+  - id: 20
+    name: "Cross-protocol Zap"
+    description: "Multi-step strategy compressed into one."
+    steps:
+      - {action: "Zap", asset: "Multi", primitive: "RoutersZaps", tx_type: "contract_call"}

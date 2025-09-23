@@ -1,0 +1,17 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"stBTC",
+  "type":"object",
+  "properties":{
+    "supply_start":{"type":"number"},
+    "exch_rate_start_btc":{"type":"number"},
+    "fee_share_to_stbtc":{"type":"number"},
+    "flows":{
+      "type":"object",
+      "properties":{
+        "assets_rate":{"type":"object"},
+        "supply_rate":{"type":"object"}
+      },"required":["assets_rate","supply_rate"]
+    }
+  },"required":["supply_start","exch_rate_start_btc","fee_share_to_stbtc","flows"]
+}

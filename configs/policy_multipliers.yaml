@@ -1,0 +1,14 @@
+# Policy multipliers per primitive (on top of primitive multipliers)
+# Used to steer towards sustainable, high-value activity.
+policy:
+  Payments: 1.00
+  Stablecoins: 1.10
+  Lending: 1.15
+  AMM: 1.10
+  DEXAggregator: 1.20
+  Perpetuals: 1.15
+  Options: 1.05
+  InterestTokenisation: 1.25
+  LiquidStaking: 1.10
+  BridgesOracles: 1.05
+  RoutersZaps: 1.20
