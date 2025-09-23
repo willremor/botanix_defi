@@ -1,4 +1,4 @@
-# Botanix DeFi Simulation Paper
+# Botanix DeFi Flywheel Simulations
 
 ## A mathematically driven model for chain growth and sustainability via stBTC
 
@@ -6,11 +6,11 @@
 
 This document specifies a configurable simulation framework that quantifies how on-chain activity translates into (i) BTC-denominated fee revenue and (ii) value accrual to stBTC, a non-rebasing token that receives 50% of all on-chain fees. The model:
 
-(1) forecasts transaction counts by EVM-style type
-(2) maps activity to DeFi primitives and strategy paths
-(3) prices fees in BTC with an EIP-1559-like process
-(4) scores “quality of activity” via multipliers and primitive criticality, and
-(5) updates stBTC’s exchange rate based on fee inflows and net protocol flows.
+- (1) forecasts transaction counts by EVM-style type
+- (2) maps activity to DeFi primitives and strategy paths
+- (3) prices fees in BTC with an EIP-1559-like process
+- (4) scores “quality of activity” via multipliers and primitive criticality, and
+- (5) updates stBTC’s exchange rate based on fee inflows and net protocol flows.
 
 It produces per-period and cumulative observables, scenario comparisons, and decision-oriented diagnostics to steer policy toward Botanix’s goals: maximize sustainable utilization and stBTC accrual.
 
