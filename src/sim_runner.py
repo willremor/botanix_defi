@@ -3,9 +3,35 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import pandas as pd
 from typing import Dict, Any
-from .sim_core import load_all_configs, run_single_scenario_group
-from .utils_io import ensure_dir, timestamp_slug, load_yaml
-from .mlflow_utils import set_tracking, start_run, log_params_from_dict, log_run_config, log_run_config_artifact, log_artifacts_dir
+
+# Support running both as a module (python -m src.sim_runner) and as a script (python src/sim_runner.py)
+try:
+    from .sim_core import load_all_configs, run_single_scenario_group
+    from .utils_io import ensure_dir, timestamp_slug, load_yaml
+    from .mlflow_utils import (
+        set_tracking,
+        start_run,
+        log_params_from_dict,
+        log_run_config,
+        log_run_config_artifact,
+        log_artifacts_dir,
+    )
+except ImportError:
+    import sys as _sys
+    from pathlib import Path as _Path
+    _root = str(_Path(__file__).resolve().parents[1])
+    if _root not in _sys.path:
+        _sys.path.insert(0, _root)
+    from src.sim_core import load_all_configs, run_single_scenario_group
+    from src.utils_io import ensure_dir, timestamp_slug, load_yaml
+    from src.mlflow_utils import (
+        set_tracking,
+        start_run,
+        log_params_from_dict,
+        log_run_config,
+        log_run_config_artifact,
+        log_artifacts_dir,
+    )
 
 def write_charts(outdir: Path, df: pd.DataFrame, df_fees: pd.DataFrame):
     # APY over time

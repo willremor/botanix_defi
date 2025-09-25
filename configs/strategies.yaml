@@ -1,6 +1,6 @@
 # 20 closed-loop strategy paths (each <= 6 steps), IDs are stable integers
 # Each step uses: {action, asset, primitive, tx_type}
-strategies:
+strategies:                     # Closed-loop multi-step user flows
   - id: 1
     name: "stBTC + Stablecoin + Lending"
     description: "Post BTC, mint stable via CDP, supply to lending."

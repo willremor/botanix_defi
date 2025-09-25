@@ -1,17 +1,17 @@
 # Default counts per period and single global growth process
-base_total_txs: 1_000_000
+base_total_txs: 1_000_000        # Baseline total transaction count per period before shares apply
 
 shares:
-  native_transfer: 0.30
-  erc_transfer: 0.45
-  contract_creation: 0.02
-  contract_call: 0.23
+  native_transfer: 0.30          # Share of total txs that are simple value transfers
+  erc_transfer: 0.45             # Share that are token (ERC-like) transfers
+  contract_creation: 0.02        # Share that deploy new contracts
+  contract_call: 0.23            # Share that are general contract interactions
 
 growth:
-  mode: stochastic
-  mu: 0.02         # mean % growth of counts per period
-  sigma: 0.05
-  min: -0.30
-  max:  0.50
-  truncation: truncnorm
-  seed: 21
+  mode: stochastic               # Stochastic growth process flag
+  mu: 0.02                       # Mean proportional growth in total tx count per period
+  sigma: 0.05                    # Std dev of growth draws
+  min: -0.30                     # Minimum growth draw
+  max:  0.50                     # Maximum growth draw
+  truncation: truncnorm          # Truncation distribution type
+  seed: 21                       # RNG seed for growth process

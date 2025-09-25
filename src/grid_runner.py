@@ -1,9 +1,22 @@
 from __future__ import annotations
 from pathlib import Path
 import pandas as pd
-from .sim_core import load_all_configs, run_single_scenario_group
-from .utils_io import ensure_dir, timestamp_slug
-from .mlflow_utils import set_tracking, start_run, log_run_config, log_artifacts_dir
+
+# Support running both as a module (python -m src.grid_runner) and as a script (python src/grid_runner.py)
+try:  # relative imports when part of package
+    from .sim_core import load_all_configs, run_single_scenario_group
+    from .utils_io import ensure_dir, timestamp_slug
+    from .mlflow_utils import set_tracking, start_run, log_run_config, log_artifacts_dir
+except ImportError:
+    # Fallback: add repo root to sys.path and import via namespace package 'src'
+    import sys as _sys
+    from pathlib import Path as _Path
+    _root = str(_Path(__file__).resolve().parents[1])
+    if _root not in _sys.path:
+        _sys.path.insert(0, _root)
+    from src.sim_core import load_all_configs, run_single_scenario_group
+    from src.utils_io import ensure_dir, timestamp_slug
+    from src.mlflow_utils import set_tracking, start_run, log_run_config, log_artifacts_dir
 
 def run_grid():
     cfg = load_all_configs()

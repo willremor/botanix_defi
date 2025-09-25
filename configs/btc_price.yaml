@@ -1,6 +1,6 @@
 # BTC price path (GBM/log-returns)
-start_usd: 70_000
-gbm:
-  mu: 0.00
-  sigma: 0.80
-  seed: 31
+start_usd: 100_000        # Initial BTC spot price in USD (S0)
+gbm:                      # Geometric Brownian Motion parameters
+  mu: 0.20                # Annualized drift (expected log return) before volatility drag
+  sigma: 0.70             # Annualized volatility of log returns
+  seed: 31                # RNG seed for reproducible simulated price path

@@ -1,14 +1,14 @@
 # Policy multipliers per primitive (on top of primitive multipliers)
 # Used to steer towards sustainable, high-value activity.
-policy:
-  Payments: 1.00
-  Stablecoins: 1.10
-  Lending: 1.15
-  AMM: 1.10
-  DEXAggregator: 1.20
-  Perpetuals: 1.15
-  Options: 1.05
-  InterestTokenisation: 1.25
-  LiquidStaking: 1.10
-  BridgesOracles: 1.05
-  RoutersZaps: 1.20
+policy:                                   # Policy-layer multipliers steering incentives
+  Payments: 1.00                          # Neutral baseline for native transfers
+  Stablecoins: 1.10                       # Encourage stablecoin depth
+  Lending: 1.15                           # Boost credit market activity
+  AMM: 1.10                               # Support liquidity pools
+  DEXAggregator: 1.20                     # Favor efficient routing
+  Perpetuals: 1.15                        # Moderate leverage market push
+  Options: 1.05                           # Light support for options activity
+  InterestTokenisation: 1.25              # Strong incentive for yield tokenisation
+  LiquidStaking: 1.10                     # Encourage staking derivatives
+  BridgesOracles: 1.05                    # Essential infrastructure uplift
+  RoutersZaps: 1.20                       # Promote one-click multi-step UX

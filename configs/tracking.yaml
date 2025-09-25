@@ -1,8 +1,8 @@
-enabled: true
-tracking_uri: "http://localhost:5000"
-experiment_name: "Botanix-DeFi-Sim"
-artifact_location: "outputs/mlruns"
-tags:
-  project: "Botanix"
-  owner: "DeFi-Research"
-  sim_version: "v0.1.0"
+enabled: true                         # Toggle MLflow tracking on/off
+tracking_uri: "http://localhost:5000" # MLflow tracking server URI
+experiment_name: "Botanix-DeFi-Sim"   # MLflow experiment name
+artifact_location: "outputs/mlruns"   # Local artifact storage root
+tags:                                 # Default run tags
+  project: "Botanix"                 # Project identifier
+  owner: "DeFi-Research"             # Owning team / contact
+  sim_version: "v0.1.0"              # Simulation config/version tag

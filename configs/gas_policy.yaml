@@ -1,21 +1,21 @@
 # Global gas settings and EIP-1559-like fee mechanics (BTC-denominated)
-mode: stochastic   # deterministic | stochastic
+mode: stochastic              # 'stochastic' applies random draws; 'deterministic' uses means
 
 # Single global stochastic adjustment applied to all primitives' gas at the high of band:
 # adjusted_gas = max(gas_low, gas_high * (1 + draw)), truncated to [gas_low, gas_high]
-gas_adjustment:
-  mu: -0.10
-  sigma: 0.05
-  min: -0.30
-  max:  0.10
-  truncation: truncnorm
-  seed: 11
+gas_adjustment:               # Truncated normal relative shock to high gas bound
+  mu: -0.10                   # Mean relative adjustment (e.g. -0.10 = -10%)
+  sigma: 0.05                 # Std dev of pre-truncation normal
+  min: -0.30                  # Lower truncation bound for draw
+  max:  0.10                  # Upper truncation bound for draw
+  truncation: truncnorm       # Truncation distribution type
+  seed: 11                    # RNG seed for this adjustment
 
 # EIP-1559-like effective price in BTC per gas: base_fee_t + priority_tip_btc
 # base_fee_t evolves lognormally (mu_bf, sigma_bf); priority_tip is constant for simplicity
-eip1559:
-  base_fee_btc_start: 1.0e-8    # in BTC/gas (example)
-  mu_bf: 0.00
-  sigma_bf: 0.10
-  priority_tip_btc: 1.0e-9      # BTC/gas
-  seed: 12
+eip1559:                        # EIP-1559-like base fee + tip model
+  base_fee_btc_start: 1.0e-8    # Initial base fee (BTC per gas)
+  mu_bf: 0.00                   # Drift of log base fee process
+  sigma_bf: 0.10                # Volatility of log base fee process
+  priority_tip_btc: 1.0e-9      # Constant priority tip (BTC per gas)
+  seed: 12                      # RNG seed for base fee path

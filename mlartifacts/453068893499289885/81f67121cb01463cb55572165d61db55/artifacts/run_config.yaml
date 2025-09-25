@@ -1,0 +1,10 @@
+run:
+  horizon_periods: 52
+  output_root: outputs
+  period_label: week
+  preset_name: base
+  scenario_groups:
+  - 101
+  - 102
+  - 103
+  timestamp_utc: true

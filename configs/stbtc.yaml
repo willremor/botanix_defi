@@ -1,23 +1,23 @@
 # Non-rebasing stBTC (price-per-share). 50% of BTC fees accrue to assets.
-supply_start: 10_000_000
-exch_rate_start_btc: 1.0
-fee_share_to_stbtc: 0.50
+supply_start: 10_000_000        # Initial circulating supply of stBTC tokens
+exch_rate_start_btc: 1.0        # Initial price-per-share versus BTC
+fee_share_to_stbtc: 0.50        # Fraction of protocol BTC fees accruing to stBTC
 
 flows:
-  assets_rate:
-    mode: stochastic
-    mu: 0.00
-    sigma: 0.05
-    min: -0.50
-    max:  0.50
-    truncation: truncnorm
-    seed: 41
+  assets_rate:                  # Growth/decay in underlying BTC assets backing token
+    mode: stochastic            # stochastic => draw each period; deterministic => use mu
+    mu: 0.00                    # Mean per-period rate (pre-truncation)
+    sigma: 0.05                 # Std dev of rate (pre-truncation)
+    min: -0.50                  # Lower clamp for draw
+    max:  0.50                  # Upper clamp for draw
+    truncation: truncnorm       # Distribution type for truncation
+    seed: 41                    # RNG seed for assets rate
 
-  supply_rate:
-    mode: stochastic
-    mu: 0.00
-    sigma: 0.02
-    min: -0.30
-    max:  0.50
-    truncation: truncnorm
-    seed: 42
+  supply_rate:                  # Net token supply expansion/contraction rate
+    mode: stochastic            # Mode controlling randomness
+    mu: 0.00                    # Mean supply rate
+    sigma: 0.02                 # Std dev of supply rate
+    min: -0.30                  # Minimum realized draw
+    max:  0.50                  # Maximum realized draw
+    truncation: truncnorm       # Distribution / truncation scheme
+    seed: 42                    # RNG seed for supply rate
