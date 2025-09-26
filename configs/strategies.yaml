@@ -24,21 +24,27 @@ strategies:                     # Closed-loop multi-step user flows
       - {action: "Supply", asset: "stBTC", primitive: "Lending", tx_type: "contract_call"}
       - {action: "Borrow", asset: "CDP_Stable", primitive: "Lending", tx_type: "contract_call"}
       - {action: "Swap", asset: "CDP_Stable→stBTC", primitive: "AMM", tx_type: "contract_call"}
+      - {action: "Supply", asset: "stBTC", primitive: "Lending", tx_type: "contract_call"}
 
   - id: 4
-    name: "stBTC Carry + Hedge"
-    description: "Borrow stable, buy stBTC, hedge on perps."
-    steps:
-      - {action: "Supply", asset: "stBTC", primitive: "Lending", tx_type: "contract_call"}
-      - {action: "Borrow", asset: "CDP_Stable", primitive: "Lending", tx_type: "contract_call"}
-      - {action: "Long", asset: "stBTC", primitive: "Perpetuals", tx_type: "contract_call"}
-
-  - id: 5
-    name: "LP + Perps Delta Hedge"
-    description: "Provide LP then hedge exposure via perps."
+    name: "AMM LP + Farming + Lending"
+    description: "LP tokens used to collateralise lending then re-LPed"
     steps:
       - {action: "AddLiquidity", asset: "stBTC/CDP_Stable", primitive: "AMM", tx_type: "contract_call"}
-      - {action: "Short", asset: "stBTC", primitive: "Perpetuals", tx_type: "contract_call"}
+      - {action: "Stake", asset: "LP", primitive: "AMM", tx_type: "contract_call"}
+      - {action: "Supply", asset: "LP", primitive: "Lending", tx_type: "contract_call"}
+      - {action: "Borrow", asset: "CDP_Stable", primitive: "Lending", tx_type: "contract_call"}
+      - {action: "AddLiquidity", asset: "stBTC/CDP_Stable", primitive: "AMM", tx_type: "contract_call"}
+
+  - id: 5
+    name: "Liquid Staking + Lending + LP"
+    description: "Stake BTC -> receive LST -> use LST in lending or LP"
+    steps:
+      - {action: "Stake", asset: "BTC", primitive: "LiquidStaking", tx_type: "contract_call"}
+      - {action: "Receive", asset: "stBTC", primitive: "LiquidStaking", tx_type: "contract_call"}
+      - {action: "Supply", asset: "stBTC", primitive: "Lending", tx_type: "contract_call"}
+      - {action: "Borrow", asset: "CDP_Stable", primitive: "Lending", tx_type: "contract_call"}
+      - {action: "AddLiquidity", asset: "stBTC/CDP_Stable", primitive: "AMM", tx_type: "contract_call"}  
 
   - id: 6
     name: "Interest Tokenisation (PT/YT) + Lever"

@@ -3,8 +3,9 @@ run:
   horizon_periods: 12
   period_label: "month"  # for annualization (52 weeks, 12 months, 4 quarters, 1 year)
 
-  scenario_groups: [101, 102, 103]   # choose 1 for single-run; multiple for grid
+  scenario_groups: [101, 102, 103, 104, 105]   # choose 1 for single-run; multiple for grid
   preset_name: "base"
 
   output_root: "outputs"
   timestamp_utc: true
+  weighted_metric_k: 0.5   # Sensitivity of separate weighted growth metric (0=no effect, 1=full)

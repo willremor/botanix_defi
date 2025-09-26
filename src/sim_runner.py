@@ -59,6 +59,27 @@ def write_charts(outdir: Path, df: pd.DataFrame, df_fees: pd.DataFrame):
         plt.xlabel("Period"); plt.ylabel("Fees (BTC)"); plt.title("Fees by Primitive (stacked)")
         plt.tight_layout(); plt.savefig(outdir / "chart_fees_by_primitive_stacked.png"); plt.close()
 
+    # Separate weighted metric: APY over time (does not alter stBTC mechanics)
+    if "weighted_fee_apy_annualized" in df.columns:
+        plt.figure(figsize=(7,4))
+        plt.plot(df["period_num"], df["weighted_fee_apy_annualized"], marker="o", color="tab:orange")
+        plt.xlabel("Period"); plt.ylabel("Weighted APY (annualized)"); plt.title("Weighted Fee-Based APY Over Time")
+        plt.tight_layout(); plt.savefig(outdir / "chart_weighted_fee_apy_over_time.png"); plt.close()
+
+    # New metric: stBTC APY volatility over time (cumulative std)
+    if "stbtc_apy_vol_cumulative" in df.columns:
+        plt.figure(figsize=(7,4))
+        plt.plot(df["period_num"], df["stbtc_apy_vol_cumulative"], marker="o", color="tab:red")
+        plt.xlabel("Period"); plt.ylabel("APY Volatility (annualized, cumulative std)"); plt.title("stBTC APY Volatility Over Time")
+        plt.tight_layout(); plt.savefig(outdir / "chart_apy_volatility_over_time.png"); plt.close()
+
+    # New metric: stBTC APY rolling volatility over time (window=8)
+    if "stbtc_apy_vol_rolling_8" in df.columns:
+        plt.figure(figsize=(7,4))
+        plt.plot(df["period_num"], df["stbtc_apy_vol_rolling_8"], marker="o", color="tab:purple")
+        plt.xlabel("Period"); plt.ylabel("APY Volatility (annualized, rolling std, w=8)"); plt.title("stBTC APY Rolling Volatility (w=8) Over Time")
+        plt.tight_layout(); plt.savefig(outdir / "chart_apy_volatility_rolling_8.png"); plt.close()
+
 def run_single():
     cfg = load_all_configs()
     ts = timestamp_slug(cfg.run.get("timestamp_utc", True))

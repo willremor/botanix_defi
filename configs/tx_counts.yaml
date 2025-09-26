@@ -1,5 +1,5 @@
 # Default counts per period and single global growth process
-base_total_txs: 1_000_000        # Baseline total transaction count per period before shares apply
+base_total_txs: 100_000        # Baseline total transaction count per period before shares apply
 
 shares:
   native_transfer: 0.30          # Share of total txs that are simple value transfers

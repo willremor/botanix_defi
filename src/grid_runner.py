@@ -47,7 +47,9 @@ def run_grid():
             "final_exchange_rate": last["exchange_rate_btc_per_stbtc"],
             "final_apy": last["stbtc_apy_annualized"],
             "cum_fees_btc": res["summary"]["fees_total_btc"].sum(),
-            "mean_weighted_gas": res["summary"]["weighted_gas_score"].mean()
+            "mean_weighted_gas": res["summary"]["weighted_gas_score"].mean(),
+            # New: include configured sensitivity k for the separate weighted metric
+            "weighted_k": cfg.run.get("weighted_metric_k", 0.5)
         })
 
         if child is not None:

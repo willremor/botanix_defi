@@ -3,6 +3,7 @@ mode: stochastic              # 'stochastic' applies random draws; 'deterministi
 
 # Single global stochastic adjustment applied to all primitives' gas at the high of band:
 # adjusted_gas = max(gas_low, gas_high * (1 + draw)), truncated to [gas_low, gas_high]
+# adjusted downward to reflect low chain utilisation (mu < 0, mu = 0 symmetry, mu> upward)
 gas_adjustment:               # Truncated normal relative shock to high gas bound
   mu: -0.10                   # Mean relative adjustment (e.g. -0.10 = -10%)
   sigma: 0.05                 # Std dev of pre-truncation normal

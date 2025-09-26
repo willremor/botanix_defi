@@ -11,7 +11,8 @@
         "scenario_groups":{"type":"array","items":{"type":"integer"}},
         "preset_name":{"type":"string"},
         "output_root":{"type":"string"},
-        "timestamp_utc":{"type":"boolean"}
+  "timestamp_utc":{"type":"boolean"},
+  "weighted_metric_k":{"type":"number","minimum":0,"maximum":2}
       },
       "required":["horizon_periods","scenario_groups","preset_name","output_root"]
     }

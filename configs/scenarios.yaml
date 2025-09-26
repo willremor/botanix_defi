@@ -1,11 +1,28 @@
 # Scenario groups: each is up to 5 strategy IDs for A/B tests
 scenarios:                      # Scenario groups referencing strategy IDs
   - id: 101
-    name: "Carry+Stable Depth"
-    strategies: [1, 2, 9, 17, 11]
+    name: "S1: stBTC + Stablecoin + Lending"
+    strategies: [1]
   - id: 102
-    name: "LP+Perps Hedged"
-    strategies: [5, 15, 10, 16]
+    name: "S2: stBTC + Stablecoin + LP Provision"
+    strategies: [2]
   - id: 103
-    name: "High Gas + Calls"
-    strategies: [3, 4, 6, 18, 20]
+    name: "S3: Recursive stBTC Leverage"
+    strategies: [3]
+  - id: 104
+    name: "S4: AMM LP + Farming + Lending"
+    strategies: [4]
+  - id: 105
+    name: "S5: Liquid Staking + Lending + LP"
+    strategies: [5]
+
+  # --- commented out previous scenarios ---
+  # - id: 101
+  #   name: "stBTC Carry + LP + Stables Leverage"
+  #   strategies: [1, 2, 3, 4, 5]
+  # - id: 102
+  #   name: "LP+Perps Hedged"
+  #   strategies: [5, 15, 10, 16]
+  # - id: 103
+  #   name: "High Gas + Calls"
+  #   strategies: [3, 4, 6, 18, 20]

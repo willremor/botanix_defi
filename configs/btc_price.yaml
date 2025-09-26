@@ -1,5 +1,5 @@
 # BTC price path (GBM/log-returns)
-start_usd: 100_000        # Initial BTC spot price in USD (S0)
+start_usd: 110_000        # Initial BTC spot price in USD (S0)
 gbm:                      # Geometric Brownian Motion parameters
   mu: 0.20                # Annualized drift (expected log return) before volatility drag
   sigma: 0.70             # Annualized volatility of log returns

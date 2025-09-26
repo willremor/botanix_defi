@@ -1,0 +1,13 @@
+run:
+  horizon_periods: 12
+  output_root: outputs
+  period_label: month
+  preset_name: base
+  scenario_groups:
+  - 101
+  - 102
+  - 103
+  - 104
+  - 105
+  timestamp_utc: true
+  weighted_metric_k: 0.5

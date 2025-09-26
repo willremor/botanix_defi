@@ -127,6 +127,8 @@ def run_single_scenario_group(cfg: SimConfig, scenario_id: int, output_dir: Path
         total_fees_btc = 0.0
         wg_score = 0.0
         fee_prim = {}
+        # For weighted growth metric (separate): track effective multipliers per primitive
+        mult_by_primitive = {}
 
         for (primitive, tx_type), n_tx in counts_by_pair.items():
             gas_per_tx = gas_per_call_for_primitive(primitive, cfg.primitives, cfg.gas_policy)
@@ -134,11 +136,32 @@ def run_single_scenario_group(cfg: SimConfig, scenario_id: int, output_dir: Path
             total_fees_btc += fees
             fee_prim[primitive] = fee_prim.get(primitive, 0.0) + fees
 
-            wg = gas_per_tx * n_tx * weighted_gas_multiplier(primitive, cfg.primitives, cfg.policy_multipliers)
+            m_eff = weighted_gas_multiplier(primitive, cfg.primitives, cfg.policy_multipliers)
+            wg = gas_per_tx * n_tx * m_eff
             wg_score += wg
+            # Track per-primitive effective multiplier for later weighting
+            mult_by_primitive[primitive] = m_eff
 
-        # stBTC update
+        # stBTC update (capture previous assets for separate weighted metric baseline)
+        prev_assets_before = st_state["assets_btc"]
         st_state, st_obs = run_stbtc_step(st_state, total_fees_btc, cfg.stbtc, per_y)
+
+        # Separate weighted growth metric (does not affect stBTC mechanics)
+        # Fee-weighted average multiplier mbar_t
+        if total_fees_btc > 0:
+            mbar_num = sum(mult_by_primitive[p] * fee_prim[p] for p in fee_prim)
+            mbar_t = mbar_num / total_fees_btc
+        else:
+            mbar_t = 1.0
+        # Sensitivity k (optional in run config; default 0.5)
+        k_sens = float(cfg.run.get("weighted_metric_k", 0.5))
+        # Base fee share from config (used only to derive a separate metric)
+        s_base = float(cfg.stbtc.get("fee_share_to_stbtc", 0.0))
+        s_eff = s_base * (1.0 + k_sens * (mbar_t - 1.0))
+        weighted_fee_accrual = s_eff * total_fees_btc
+        prev_assets = max(1e-9, prev_assets_before)
+        weighted_return_period = weighted_fee_accrual / prev_assets
+        weighted_apy_annualized = (1.0 + weighted_return_period) ** (1.0 / per_y) - 1.0
 
         rows.append({
             "period_num": t,
@@ -148,6 +171,12 @@ def run_single_scenario_group(cfg: SimConfig, scenario_id: int, output_dir: Path
             "stbtc_supply": st_state["supply"],
             "fees_total_btc": total_fees_btc,
             "weighted_gas_score": wg_score,
+            # Separate weighted growth metric outputs
+            "weighted_mbar": mbar_t,
+            "weighted_k": k_sens,
+            "weighted_s_eff": s_eff,
+            "weighted_fee_return_period": weighted_return_period,
+            "weighted_fee_apy_annualized": weighted_apy_annualized,
             **st_obs
         })
         fees_by_primitive.append({"period_num": t, **fee_prim})
@@ -156,6 +185,16 @@ def run_single_scenario_group(cfg: SimConfig, scenario_id: int, output_dir: Path
     # DataFrames
     df = pd.DataFrame(rows)
     df_fees = pd.DataFrame(fees_by_primitive).fillna(0.0)
+    # Additional metric: cumulative volatility of annualized APY (does not affect mechanics)
+    if "stbtc_apy_annualized" in df.columns:
+        df["stbtc_apy_vol_cumulative"] = (
+            df["stbtc_apy_annualized"].expanding().std(ddof=0)
+        )
+        # Additional metric: rolling (non-cumulative) volatility over a fixed window (e.g., 8 periods)
+        window = 8
+        df["stbtc_apy_vol_rolling_8"] = (
+            df["stbtc_apy_annualized"].rolling(window=window, min_periods=2).std(ddof=0)
+        )
     return {
         "summary": df,
         "fees_by_primitive": df_fees,

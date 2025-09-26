@@ -1,5 +1,5 @@
 # Policy multipliers per primitive (on top of primitive multipliers)
-# Used to steer towards sustainable, high-value activity.
+# Used to steer towards sustainable, high-value activity, high gas consumption.
 policy:                                   # Policy-layer multipliers steering incentives
   Payments: 1.00                          # Neutral baseline for native transfers
   Stablecoins: 1.10                       # Encourage stablecoin depth

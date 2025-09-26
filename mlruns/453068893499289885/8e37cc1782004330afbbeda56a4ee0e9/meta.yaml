@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/453068893499289885/8e37cc1782004330afbbeda56a4ee0e9/artifacts
+end_time: 1758870857213
+entry_point_name: ''
+experiment_id: '453068893499289885'
+lifecycle_stage: active
+run_id: 8e37cc1782004330afbbeda56a4ee0e9
+run_name: sg103_base_2025-09-26T07-14-14Z
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1758870856613
+status: 3
+tags: []
+user_id: codespace
